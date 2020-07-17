@@ -22,7 +22,16 @@ describe('server responses', () => {
   });
 
   it('should respond to a GET request for a swim command', (done) => {
-    // write your test here
+    let {req, res} = server.mock('/', 'GET');
+    // console.log(server.mock('/', 'GET'))
+    // console.log("Line27", req)
+    // console.log("Line28", res)
+    // declare an commandOptions
+    let commandOptions = ['up', 'down', 'left', 'right'];
+    httpHandler.router(req, res);
+    expect(res._responseCode).to.equal(200);
+    expect(res._ended).to.equal(true);
+    expect(commandOptions.includes(res._data.toString())).to.equal(true);
     done();
   });
 

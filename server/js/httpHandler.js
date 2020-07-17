@@ -13,8 +13,23 @@ module.exports.initialize = (queue) => {
 };
 
 module.exports.router = (req, res, next = ()=>{}) => {
-  console.log('Serving request type ' + req.method + ' for url ' + req.url);
-  res.writeHead(200, headers);
-  res.end();
-  next(); // invoke next() at the end of a request to help with testing!
+  // if request method is equal to OPTIONS
+  if (req.method === 'OPTIONS') {
+    console.log('Serving request type ' + req.method + ' for url ' + req.url);
+    res.writeHead(200, headers); // send a response statusCode and header
+    res.end(); // assign data to reponse
+    next(); // invoke next() at the end of a request to help with testing!
+  }
+  // TODO: why did the tests fail when we use else if?
+  // if request method is equal to GET
+  if (req.method === 'GET') {
+    console.log('Serving request type ' + req.method + ' for url ' + req.url);
+    // declare commandOptions array
+    let commandOptions = ['up', 'down', 'left', 'right'];
+    // get random command
+    let command = commandOptions[Math.floor(Math.random() * 4)];
+    res.writeHead(200, headers); // send a response statusCode and header
+    res.end(command); // assign data to reponse
+    next(); // invoke next() at the end of a request to help with testing!
+  }
 };
