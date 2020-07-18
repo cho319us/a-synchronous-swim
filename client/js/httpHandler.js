@@ -5,7 +5,6 @@
   const fetch = () => {
     $.ajax({
       type: 'GET',
-      //data: formData,
       url: serverUrl,
       success: (command) => {
         console.log("success");
@@ -13,8 +12,8 @@
       },
       // called when the request finishes
       complete: () => {
-        // upon first completion of fetch, we start a pattern of running fetch every 5 seconds
-        setTimeout(fetch, 5000);
+        // upon first completion of fetch, we start a pattern of running fetch every 1 seconds
+        setTimeout(fetch, 1000);
       }
     });
   };
