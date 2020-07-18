@@ -1,11 +1,12 @@
-
-
+// import module.exports of messageQueue
+const messageQueue = require('./js/messageQueue');
 
 const keypressHandler = require('./js/keypressHandler');
-keypressHandler.initialize(message => console.log(`Message received: ${message}`));
+keypressHandler.initialize(messageQueue.enqueue); // pass in enqueue function
 
 const httpHandler = require('./js/httpHandler');
-
+// pass in messageQueue object to httpHandler module
+httpHandler.initialize(messageQueue);
 
 const http = require('http');
 const server = http.createServer(httpHandler.router);
