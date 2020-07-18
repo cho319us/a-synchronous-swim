@@ -5,8 +5,10 @@ const expect = require('chai').expect;
 const server = require('./mockServer');
 
 const httpHandler = require('../js/httpHandler');
-
-
+// import messageQueue module
+const messageQueue = require('../js/messageQueue');
+// pass in messageQueue object to httpHandler module
+httpHandler.initialize(messageQueue);
 
 describe('server responses', () => {
 
@@ -23,11 +25,10 @@ describe('server responses', () => {
 
   it('should respond to a GET request for a swim command', (done) => {
     let {req, res} = server.mock('/', 'GET');
-    // console.log(server.mock('/', 'GET'))
-    // console.log("Line27", req)
-    // console.log("Line28", res)
     // declare an commandOptions
     let commandOptions = ['up', 'down', 'left', 'right'];
+    // enqueue a command to test dequeue function inside the router function of httpHandler
+    messageQueue.enqueue('up');
     httpHandler.router(req, res);
     expect(res._responseCode).to.equal(200);
     expect(res._ended).to.equal(true);
